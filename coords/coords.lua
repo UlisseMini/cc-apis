@@ -4,11 +4,6 @@
 -- @author Ulisse Mini
 -- @license MIT
 
--- For debug logging.
-local function debugf(s, ...)
-  --print(s:format(...))
-end
-
 -- The current coordanites, initalized to zero.
 -- TODO: Option to use GPS
 local c = {

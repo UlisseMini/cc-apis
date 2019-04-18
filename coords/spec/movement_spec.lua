@@ -16,6 +16,8 @@ local function reset(c)
 end
 
 -- describe a generic move spec.
+-- TODO: Abstract 'reset(coords)' away
+--          (was having issue with scope from the testing framework)
 function describeM(thing)
   local move = assert(load('return '..thing))()
   if move == nil then
@@ -52,15 +54,11 @@ describeM('turtle.back')
 describeM('turtle.up')
 describeM('turtle.down')
 
+
+-- TODO: Add Test cases for other functions.
 describe('turtle.forward', function()
   it('should decrement z when heading north', function()
     turtle.forward(true)
     assert.are.same({z = -1, x = 0, y = 0, ori = 0}, coords)
-  end)
-
-  it('coords should not change when turtle.forward returns false', function()
-    coords = startCoords
-    turtle.forward(false)
-    assert.are.same(startCoords, coords)
   end)
 end)

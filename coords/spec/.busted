@@ -1,0 +1,8 @@
+require('fs')
+require('textutils')
+require('turtle')
+
+coords = dofile('../coords.lua')
+require('helpers')
+
+return { _G }

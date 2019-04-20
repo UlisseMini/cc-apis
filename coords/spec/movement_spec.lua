@@ -1,9 +1,3 @@
-require('fs')
-require('turtle')
-require('textutils')
-
-local coords = dofile('../coords.lua')
-
 local startCoords = {
   x = 0,
   y = 0,
@@ -11,40 +5,32 @@ local startCoords = {
   ori = 0
 }
 
-local function reset(c)
-  c.x, c.y, c.z, c.ori = 0,0,0,0
-end
-
 -- describe a generic move spec.
--- TODO: Abstract 'reset(coords)' away
---          (was having issue with scope from the testing framework)
 function describeM(thing)
   local move = assert(load('return '..thing))()
   if move == nil then
     error(("failed to get the value for %q"):format(thing))
   end
 
+  before_each(function() reset(coords) end)
+
   describe(thing, function()
     it('should change coords when it moves', function()
       move(true)
       assert.are_not.same ( startCoords, coords )
-      reset(coords)
     end)
 
     it('should not change coords when moving fails ', function()
       move(false)
       assert.are.same ( startCoords, coords )
-      reset(coords)
     end)
 
     it('should return true when passed true', function()
-      assert.are.same(move(true), true)
-      reset(coords)
+      assert.are.equal(true, move(true))
     end)
 
     it('should return false when passed false', function()
-      assert.are.same(move(false), false)
-      reset(coords)
+      assert.are.equal(false, move(false))
     end)
   end)
 end

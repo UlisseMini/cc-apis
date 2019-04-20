@@ -45,22 +45,44 @@ function turtle.select(n)
   slot = n
 end
 
+-- New function that returns true or false.
+-- @param event will be corutine.yield'ed if inside a yieldable coroutine.
+-- this allows for tests to limit atempted moves.
+local function fn(event)
+  return function(...)
+    if coroutine.isyieldable() then
+      coroutine.yield(event)
+    end
+
+    return trueorfalse(...)
+  end
+end
+
+-- return a function that always returns ...
+local function always(...)
+  local r = {...}
+  return function()
+    return table.unpack(r)
+  end
+end
+
 -- Moving functions will return true or false randomly
-turtle.forward = trueorfalse
-turtle.back    = trueorfalse
-turtle.down    = trueorfalse
-turtle.up      = trueorfalse
+turtle.forward = fn 'forward'
+turtle.back    = fn 'back'
+turtle.down    = fn 'down'
+turtle.up      = fn 'up'
 
 -- Turning functions return nothing so i can leave them blank
+-- TODO: Add yields so they can be tested.
 function turtle.turnRight () end
 function turtle.turnLeft  () end
 
--- Digging functions return true or false randomly.
-turtle.dig     = trueorfalse
-turtle.digUp   = trueorfalse
-turtle.digDown = trueorfalse
+-- Digging functions always return false.
+turtle.dig     = always(false)
+turtle.digUp   = always(false)
+turtle.digDown = always(false)
 
--- Attacking functions return true or false randomly.
-turtle.attackDown = trueorfalse
-turtle.attackUp   = trueorfalse
-turtle.attack     = trueorfalse
+-- Attacking functions always return false
+turtle.attackDown = always(false)
+turtle.attackUp   = always(false)
+turtle.attack     = always(false)

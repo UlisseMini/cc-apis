@@ -12,9 +12,9 @@ function describeM(thing)
     error(("failed to get the value for %q"):format(thing))
   end
 
-  before_each(function() reset(coords) end)
-
   describe(thing, function()
+    before_each(function() reset(coords) end)
+
     it('should change coords when it moves', function()
       move(true)
       assert.are_not.same ( startCoords, coords )

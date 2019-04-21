@@ -1,4 +1,4 @@
-local startCoords = {
+local start = {
   x = 0,
   y = 0,
   z = 0,
@@ -13,16 +13,16 @@ function describeM(thing)
   end
 
   describe(thing, function()
-    before_each(function() reset(coords) end)
+    before_each(function() reset(c) end)
 
-    it('should change coords when it moves', function()
+    it('should change  when it moves', function()
       move(true)
-      assert.are_not.same ( startCoords, coords )
+      assert.are_not.same ( start, c )
     end)
 
-    it('should not change coords when moving fails ', function()
+    it('should not change  when moving fails ', function()
       move(false)
-      assert.are.same ( startCoords, coords )
+      assert.are.same ( start, c )
     end)
 
     it('should return true when passed true', function()
@@ -35,16 +35,16 @@ function describeM(thing)
   end)
 end
 
-describeM('turtle.forward')
-describeM('turtle.back')
-describeM('turtle.up')
-describeM('turtle.down')
+describeM('t.forward')
+describeM('t.back')
+describeM('t.up')
+describeM('t.down')
 
 
 -- TODO: Add Test cases for other functions.
-describe('turtle.forward', function()
+describe('t.forward', function()
   it('should decrement z when heading north', function()
-    turtle.forward(true)
-    assert.are.same({z = -1, x = 0, y = 0, ori = 0}, coords)
+    t.forward(true)
+    assert.are.same({z = -1, x = 0, y = 0, ori = 0}, c)
   end)
 end)

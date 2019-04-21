@@ -1,8 +1,10 @@
 require('fs')
 require('textutils')
 require('turtle')
+require('gps')
 
-coords = dofile('../coords.lua')
+t, c = dofile('../coords.lua')
+
 require('helpers')
 
 return { _G }

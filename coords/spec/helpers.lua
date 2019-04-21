@@ -34,12 +34,5 @@ function withLimit(limit, fn, ...)
 
   -- TODO: Convert this from a test error to a test failure.
   error(
-    ('Limit (%d) exceeded, last event was %q'):format(limit, r[2]))
-end
-
--- pass ... to turtle.moveTo but if
--- over limit functions are called then
--- give up with a descriptive error.
-function moveToLimit(limit, ...)
-  withLimit(limit, turtle.moveTo, ...)
+    ('Limit (%d) exceeded, last event was %q'):format(limit, r[2]), 2)
 end

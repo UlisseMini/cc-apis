@@ -15,20 +15,12 @@ local c = {
   ori = 0, -- Current orientation, 0-3
 }
 
---- How to increment Z depending on the orientation
-local zDiff = {
-	[0] = -1,
-	[1] = 0,
-	[2] = 1,
-	[3] = 0
-}
-
---- How to increment Y depending on the orientation
-local xDiff = {
-	[0] = 0,
-	[1] = 1,
-	[2] = 0,
-	[3] = -1
+-- The delta for different orientations.
+local delta = {
+  [0] = function() c.z = c.z - 1 end,
+  [1] = function() c.x = c.x + 1 end,
+  [2] = function() c.z = c.z + 1 end,
+  [3] = function() c.x = c.x - 1 end
 }
 
 function t.turnRight()
@@ -58,16 +50,14 @@ end
 -- @treturn bool success
 -- @function t.forward
 t.forward = move(turtle.forward, function()
-  c.x = c.x + xDiff[c.ori]
-  c.z = c.z + zDiff[c.ori]
+  delta[c.ori]()
 end)
 
 --- Move the turtle backward.
 -- @treturn bool success
 -- @function t.back
 t.back = move(turtle.back, function()
-    c.x = c.x - xDiff[c.ori]
-    c.z = c.z - zDiff[c.ori]
+  delta[c.ori]()
 end)
 
 --- Move the turtle upwards.
